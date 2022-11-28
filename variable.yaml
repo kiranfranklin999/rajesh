@@ -1,0 +1,8 @@
+drop_out: 0.25
+layer_1: 141
+layer_2: 161
+layer_3: 171
+layer_4: 171
+layer_5: 91
+layer_6: 156
+learning_rate: 0.001

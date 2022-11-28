@@ -1,0 +1,7 @@
+activation: relu
+learning_rate: 0.001
+num_layers: 3
+units_0: 8
+units_1: 6
+units_2: 2
+weights: random_normal
