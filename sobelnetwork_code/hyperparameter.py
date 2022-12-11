@@ -80,7 +80,8 @@ def model_builder(hp):
   return model
 
 
-def tune_model(train_x,train_y,val_x,val_y,epochs: int,batch_size: int,project_name: str):
+def tune_model(train_x,train_y,val_x,val_y,epochs,batch_size,project_name):
+    print(train_x.shape,train_y.shape,val_x.shape,val_y.shape,epochs,batch_size,project_name)
     es_callback = EarlyStopping( monitor='val_loss',min_delta=0,patience=10, verbose=1, mode="auto", baseline=None, restore_best_weights=False)
     tuner =  RandomSearch(hypermodel=model_builder,
                       objective="val_mean_squared_error",
@@ -96,18 +97,17 @@ def tune_model(train_x,train_y,val_x,val_y,epochs: int,batch_size: int,project_n
     return best_params,best_model
 
 
-
-if __name__=="__mian__":
+if __name__=="__main__":
     dep_train=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XTr.dat",sep='\s+',names=[str(i) for i in range(0,16)])
     indep_train=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yTr.dat",sep='\s+',names=['target'])
     dep_val=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XV.dat",sep='\s+',names=[str(i) for i in range(0,16)])
     indep_val=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yV.dat",sep='\s+',names=["target"])
     dep_test=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XT.dat",sep='\s+',names=[str(i) for i in range(0,16)])
     indep_test=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yT.dat",sep='\s+',names=["target"])
-
+    print(dep_train.shape,indep_train.shape,dep_val.shape,indep_val.shape,dep_test.shape,indep_test.shape)
     best_params,best_model=tune_model(train_x=dep_train,train_y=indep_train,val_x=dep_val,val_y=indep_val,epochs=20,batch_size=32,project_name="soblenetwork_tuning")
     with io.open('params.yaml', 'w', encoding='utf8') as outfile:
         yaml.dump(best_params[0].values, outfile, default_flow_style=False, allow_unicode=True)
     print("file_name_ids_inside form:",best_params[0].values,file=sys.stderr)
     
-    # history=best_model.fit(dep_train, indep_train, batch_size=32, epochs=3, validation_data=(dep_val, indep_val))
+    
