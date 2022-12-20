@@ -1,0 +1,9 @@
+activation_1: relu
+activation_2: tanh
+activation_3: relu
+learning_rate: 0.01
+num_layers: 3
+units_0: 4
+units_1: 2
+units_2: 6
+weights: he_uniform
