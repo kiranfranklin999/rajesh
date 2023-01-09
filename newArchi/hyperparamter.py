@@ -45,11 +45,17 @@ def tune_model(train_x,train_y,val_x,val_y,epochs: int,batch_size: int,project_n
 
 if __name__=="__main__":
     dep_train=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XTr.dat",sep='\s+',names=[str(i) for i in range(0,16)])
+    dep_train=dep_train.iloc[:10,]
     indep_train=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yTr.dat",sep='\s+',names=['target'])
+    indep_train=indep_train.iloc[:10,]
     dep_val=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XV.dat",sep='\s+',names=[str(i) for i in range(0,16)])
+    dep_val=dep_val.iloc[:10,]
     indep_val=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yV.dat",sep='\s+',names=["target"])
+    indep_val=indep_val.iloc[:10,]
     dep_test=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\XT.dat",sep='\s+',names=[str(i) for i in range(0,16)])
+    dep_test=dep_test.iloc[:10,]
     indep_test=pd.read_csv("D:\\bro\\Analysis\\mSANN\\cd\\yT.dat",sep='\s+',names=["target"])
+    indep_test=indep_test.iloc[:10,]
 
     best_params=tune_model(train_x=dep_train,train_y=indep_train,val_x=dep_val,val_y=indep_val,epochs=5,batch_size=32,project_name="soblenetwork_tuning1")
     with io.open('params1.yaml', 'w', encoding='utf8') as outfile:
